@@ -1,9 +1,7 @@
-import React from 'react'
-
 const InputControl = ({ label, ...props }) => {
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col w-full '>
 
       {
         label &&
@@ -12,8 +10,11 @@ const InputControl = ({ label, ...props }) => {
 
       <input
         type="text"
-        {...props}
-        className='outline-none px-3 py-2 text-xl border border-gray-400 rounded hover:border-gray-600 focus:border-[#239CE2]'
+        {...props} // this props take place - as a placeholder - for all other necessary attributes 
+        className='w-full px-3 py-2 text-xl border rounded outline-none
+        border-gray-400 
+        hover:border-gray-600 
+        focus:border-custom-blue'
       />
 
     </div>

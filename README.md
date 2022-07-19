@@ -19,6 +19,12 @@
 |--|-------------------------------------------|
 | 1| Project Structure                         | 
 | 2| Full Mobile Responsiveness                | 
+| 3| `SVG` custom color passing                | 
+| 4| Set custom color at tailwind-css          | 
+| 5| Header text `gradient color` effect       | 
+| 6| Custom scrollbar create in tailwind       | 
+
+
 
 
 
@@ -86,16 +92,22 @@ sections = {
 ```jsx
     ├───public
     │   ├───index.html
-    │   └───kanban.ico
+    │   └───resume.ico
     │
     ├───src
+    │   ├───assets
+    │   │   └───OnlineResume.jsx
+    │   │
     │   ├───components
-    │   │   ├───Board.jsx
-    │   │   ├───Card.jsx
-    │   │   ├───Chip.jsx
-    │   │   ├───DropDown.jsx
-    │   │   ├───Editable.jsx
-    │   │   └───index.js
+    │   │   ├───Body.jsx
+    │   │   ├───Editor.jsx
+    │   │   ├───Header.jsx
+    │   │   ├───index.js
+    │   │   ├───InputControl.jsx
+    │   │   └───###################.js
+    │   │
+    │   ├───constants
+    │   │   └───data.js
     │   │
     │   ├───style
     │   │   └───index.css

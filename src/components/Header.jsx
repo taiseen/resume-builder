@@ -1,5 +1,4 @@
-// import onlineResume from '../assets/online_resume.svg';
-import OnlineResume from './OnlineResume';
+import OnlineResume from '../assets/OnlineResume';
 
 
 const Header = () => {
@@ -18,10 +17,9 @@ const Header = () => {
             </div>
 
             <div className='w-full md:w-[700px] md:h-[700px]'>
-                {/* <img src={onlineResume} alt="Resume" className='w-full h-full' /> */}
-                <OnlineResume color={'#2266EE'} className='w-full h-full'/>
+                <OnlineResume color={'#2266EE'} className='w-full h-full' />
             </div>
-            
+
         </header>
     )
 }

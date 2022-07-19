@@ -18,8 +18,8 @@ const Body = () => {
 
 
     return (
-        <section className='px-4 lg:px-36 pb-8 flex flex-col gap-4 flex-wrap'>
-            
+        <section className='px-4 lg:px-36 pb-8 flex flex-col gap-4 flex-wrap '>
+
             <h1 className='text-center text-3xl lg:text-5xl font-bold border-b border-gray-400 text-gray-800 pb-2 mb-6'>
                 Resume Builder
             </h1>
@@ -28,7 +28,12 @@ const Body = () => {
                 <div className='flex items-center gap-4'>
                     {
                         // color print at UI by the help of loop... 
-                        colors.map(color => <div key={color} className={`w-8 h-8 rounded-full shadow ${color} cursor-pointer border-4 border-transparent hover:border-white duration-200`} />)
+                        colors.map(color =>
+                            <div
+                                key={color}
+                                className={`${color} w-8 h-8 rounded-full shadow cursor-pointer border-4 border-transparent hover:border-white duration-200`}
+                            />
+                        )
                     }
                 </div>
 
