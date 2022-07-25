@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { ArrowDown } from 'react-feather'
 import { Editor } from '.'
 
@@ -15,6 +16,50 @@ const Body = () => {
         summary: "Summary",
         other: "Other",
     };
+
+    // base empty user info object, all related info store here...
+    const [resumeInformation, setResumeInformation] = useState({
+        [sections.basicInfo]: {
+            id: sections.basicInfo,
+            sectionTitle: sections.basicInfo,
+            detail: {},
+        },
+        [sections.workExp]: {
+            id: sections.workExp,
+            sectionTitle: sections.workExp,
+            details: [],
+        },
+        [sections.project]: {
+            id: sections.project,
+            sectionTitle: sections.project,
+            details: [],
+        },
+        [sections.education]: {
+            id: sections.education,
+            sectionTitle: sections.education,
+            details: [],
+        },
+        [sections.achievement]: {
+            id: sections.achievement,
+            sectionTitle: sections.achievement,
+            points: [],
+        },
+        [sections.summary]: {
+            id: sections.summary,
+            sectionTitle: sections.summary,
+            detail: "",
+        },
+        [sections.other]: {
+            id: sections.other,
+            sectionTitle: sections.other,
+            detail: "",
+        },
+    })
+
+
+    useEffect(() => {
+        console.log(resumeInformation);
+    }, [resumeInformation])
 
 
     return (
@@ -43,7 +88,11 @@ const Body = () => {
                 </button>
             </div>
 
-            <Editor sections={sections} />
+            <Editor
+                sections={sections}
+                resumeInformation={resumeInformation}
+                setResumeInformation={setResumeInformation}
+            />
 
         </section>
     )

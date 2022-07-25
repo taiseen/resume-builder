@@ -1,3 +1,5 @@
+<img src="./src/assets/readme.png" style='width:180px' align="right" />
+
 > 18 -July - 2022
 
 ## Resume Builder | [Live Link](https://resumes-builder.netlify.app)
@@ -22,7 +24,9 @@
 | 3| `SVG` custom color passing                | 
 | 4| Set custom color at tailwind-css          | 
 | 5| Header text `gradient color` effect       | 
-| 6| Custom scrollbar create in tailwind       | 
+| 6| Custom scrollbar create in tailwind       |
+| 7| Object/Array `Destructuring`              |
+| 8| Nested Level Object/Array `Destructuring` |
 
 
 
@@ -96,7 +100,7 @@ sections = {
     │
     ├───src
     │   ├───assets
-    │   │   └───OnlineResume.jsx
+    │   │   └───OnlineResume.jsx (svg)
     │   │
     │   ├───components
     │   │   ├───Body.jsx
