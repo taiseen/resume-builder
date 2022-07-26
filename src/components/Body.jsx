@@ -58,7 +58,7 @@ const Body = () => {
 
 
     useEffect(() => {
-        console.log(resumeInformation);
+        // console.log(resumeInformation);
     }, [resumeInformation])
 
 

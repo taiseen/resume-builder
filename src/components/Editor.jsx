@@ -104,6 +104,29 @@ const Editor = ({ sections, resumeInformation, setResumeInformation }) => {
         })
     }, [activeInformation, resumeInformation, activeSectionKey, sections])
 
+    useEffect(() => {
+        const details = activeInformation?.details;
+        if (!details) return;
+
+        const activeInfo = resumeInformation[sections[activeSectionKey]];
+
+        // when new chip add for new value, previous values are going to clear...
+        setValues({
+            title: activeInfo.details[activeDetailIndex]?.title || '',
+            github: activeInfo.details[activeDetailIndex]?.github || '',
+            linkedin: activeInfo.details[activeDetailIndex]?.linkedin || '',
+            link: activeInfo.details[activeDetailIndex]?.link || '',
+            overview: activeInfo.details[activeDetailIndex]?.overview || '',
+            certificationLink: activeInfo.details[activeDetailIndex]?.certificationLink || '',
+            location: activeInfo.details[activeDetailIndex]?.location || '',
+            companyName: activeInfo.details[activeDetailIndex]?.companyName || '',
+            startDate: activeInfo.details[activeDetailIndex]?.startDate || '',
+            endDate: activeInfo.details[activeDetailIndex]?.endDate || '',
+            points: activeInfo.details[activeDetailIndex]?.points || '',
+            college: activeInfo.details[activeDetailIndex]?.college || '',
+        });
+    }, [activeDetailIndex])
+
 
     const handlePointUpdate = (value, index) => {
         const tempValues = { ...values }
@@ -190,7 +213,7 @@ const Editor = ({ sections, resumeInformation, setResumeInformation }) => {
                     ...pre,
                     [sections.project]: {
                         ...pre[sections.project],
-                        details: tempDetail,
+                        details: tempDetails,
                         sectionTitle
                     }
                 }));
@@ -201,7 +224,7 @@ const Editor = ({ sections, resumeInformation, setResumeInformation }) => {
                 // creating new object by new info
                 const tempDetail = {
                     title: values.title,
-                    collage: values.collage,
+                    college: values.college,
                     startDate: values.startDate,
                     endDate: values.endDate,
                 };
@@ -216,7 +239,7 @@ const Editor = ({ sections, resumeInformation, setResumeInformation }) => {
                     ...pre,
                     [sections.education]: {
                         ...pre[sections.education],
-                        details: tempDetail,
+                        details: tempDetails,
                         sectionTitle
                     }
                 }));
@@ -277,6 +300,48 @@ const Editor = ({ sections, resumeInformation, setResumeInformation }) => {
         }
     }
 
+
+    // + New | Experience add button logic...
+    const handleAddMoreChip = () => {
+        const details = activeInformation?.details;
+        if (!details) return;
+
+        // get last element from an [array]
+        const lastDetail = details.slice(-1)[0];
+        // if last element is empty, then do not add new element...
+        if (!Object.keys(lastDetail).length) return;
+
+        details.push({});
+
+        // nested element access...
+        setResumeInformation(pre => ({
+            ...pre,
+            [sections[activeSectionKey]]: {
+                ...resumeInformation[sections[activeSectionKey]],
+                details: details,  // update this details [array] inside this object
+            }
+        }))
+        setActiveDetailIndex(details?.length - 1);
+    }
+
+
+    const handleDeleteChip = (index) => {
+        const details = activeInformation?.details
+            ? [...activeInformation?.details]
+            : ''
+        if (!details) return;
+        details.splice(index, 1); // remove that specific element from [array]
+
+        // nested element access...
+        setResumeInformation(pre => ({
+            ...pre,
+            [sections[activeSectionKey]]: {
+                ...resumeInformation[sections[activeSectionKey]],
+                details: details, // update this details [array] inside this object
+            }
+        }))
+        setActiveDetailIndex(pre => (pre === index ? 0 : pre - 1));
+    }
 
 
 
@@ -423,8 +488,8 @@ const Editor = ({ sections, resumeInformation, setResumeInformation }) => {
                     onChange={e => setValues(pre => ({ ...pre, title: e.target.value }))}
                 />
                 <InputControl
-                    label='Collage/School Name'
-                    placeholder='Enter name of your collage/school'
+                    label='college/School Name'
+                    placeholder='Enter name of your college/school'
                     value={values.college}
                     onChange={e => setValues(pre => ({ ...pre, college: e.target.value }))}
                 />
@@ -595,7 +660,7 @@ const Editor = ({ sections, resumeInformation, setResumeInformation }) => {
 
 
     return (
-        <section className='w-full lg:w-fit min-h-[450px] flex flex-col gap-7 items-center mt-12 rounded mx-auto border border-gray-400'>
+        <section className='w-full lg:w-[950px]  min-h-[450px] flex flex-col gap-7 items-center mt-12 rounded mx-auto border border-gray-400'>
 
             {/* Header Title */}
             <div className='flex flex-col lg:flex-row items-center flex-wrap overflow-x-auto border-b border-gray-400'>
@@ -633,20 +698,33 @@ const Editor = ({ sections, resumeInformation, setResumeInformation }) => {
                 />
 
                 {/* 🟡🟡🟡 Chips 🟡🟡🟡 */}
-                <div className='flex gap-2'>
+                <div className='flex gap-2 flex-wrap flex-col items-center md:flex-row'>
                     {
                         activeInformation?.details
                             ? activeInformation?.details?.map((item, i) =>
                                 <div
                                     key={i}
-                                    className={`${activeDetailIndex === i ? 'bg-blue-500' : 'bg-gray-500'}  px-4 py-1 rounded-full flex w-fit cursor-pointer text-white`}
+                                    className={`${activeDetailIndex === i ? 'bg-blue-500' : 'bg-gray-500'} px-3 py-1 rounded flex w-fit cursor-pointer text-white`}
                                     onClick={() => setActiveDetailIndex(i)}
                                 >
-                                    <p>{sections[activeSectionKey]} - {i + 1}</p>
-                                    <X className='pl-1 hover:text-red-300 duration-200' />
+                                    <p>{sections[activeSectionKey]} - {i + 1}</p> &nbsp;
+                                    <X
+                                        onClick={(e) => { e.stopPropagation(); handleDeleteChip(i) }}
+                                        className='pl-1 hover:text-red-800 duration-200'
+                                    />
                                 </div>
                             )
                             : ''
+                    }
+                    {
+                        // more experience add button...
+                        activeInformation?.details &&
+                        activeInformation?.details?.length > 0 &&
+                        <button
+                            onClick={handleAddMoreChip}
+                            className='bg-blue-300 px-4 py-1 rounded hover:text-white hover:bg-blue-500 duration-200 cursor-pointer active:translate-y-1'>
+                            + New
+                        </button>
                     }
                 </div>
                 {
